@@ -1,9 +1,11 @@
+import socket
 import threading
 import server as server
 import cliente as cliente
 import time
 
-localIP = "192.168.0.101"
+host = socket.gethostname()
+localIP = socket.gethostbyname(host)
 localPort = 20001
 bufferSize = 1024
 

@@ -82,6 +82,8 @@ def udp_client():
     global ip
     ip = tk.Entry(janela)
     ip.grid(row=0, column=1, padx=5, pady=5, sticky="ew")
+    host = socket.gethostname()
+    ip.insert(tk.END, socket.gethostbyname(host))
 
     label2 = tk.Label(janela, text="Porta:")
     label2.grid(row=0, column=2, padx=5, pady=5, sticky="e")
