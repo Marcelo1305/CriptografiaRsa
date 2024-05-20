@@ -21,6 +21,6 @@ client_thread.daemon = True
 client_thread.start()
 time.sleep(1)
 
-while True:
-    time.sleep(10)
-    pass
+server_thread.join()
+client_thread.join()
+
