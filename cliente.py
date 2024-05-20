@@ -8,6 +8,16 @@ import ast
 chavePublica = []
 lista_ip = []
 
+# Função para pesquisar na lista de IPs
+def pesquisar_ip(event):
+    localIP = ip.get()
+    ip_encontrado = next((item[1] for item in lista_ip if localIP in item), None)
+    chave.delete(0, tk.END)
+    if ip_encontrado:
+        chave.insert(tk.END, "".join(["[", str(ip_encontrado[0]), " , ", str(ip_encontrado[1]), "]"]))
+    else:
+        chave.insert(tk.END, "")
+
 def udp_client():
     # Função para enviar mensagem para o servidor
     def enviar_mensagem():
@@ -82,6 +92,7 @@ def udp_client():
     global ip
     ip = tk.Entry(janela)
     ip.grid(row=0, column=1, padx=5, pady=5, sticky="ew")
+    ip.bind("<KeyRelease>", pesquisar_ip)  # Chama a função de pesquisa quando uma tecla é liberada
     host = socket.gethostname()
     ip.insert(tk.END, socket.gethostbyname(host))
 
