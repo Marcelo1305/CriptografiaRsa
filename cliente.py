@@ -45,4 +45,6 @@ def udp_client(localIP, localPort, bufferSize, chavePublica, form_janela):
     msgFromServer = UDPClientSocket.recvfrom(bufferSize)
 
     msg = msgFromServer[0].decode('utf-8')
+
+    form_janela.retorno(msg)
     print(msg)
