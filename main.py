@@ -1,11 +1,9 @@
 import threading
 import server
-import cliente as c
 import funcoes
 import janela
 import socket
 import tkinter as tk
-from tkinter import scrolledtext
 
 # Gerar chaves
 chaves = funcoes.gerar_chaves(11, 13)

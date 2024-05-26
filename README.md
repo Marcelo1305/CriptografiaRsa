@@ -1,2 +1,3 @@
 # CriptografiaRsa
-Criptografia usando Rsa em python
+Um chat de comunicação Ip utilizando conexão socket UDP 
+Com criptografia RSA 

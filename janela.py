@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import scrolledtext
-from tkinter import ttk
 import threading
 import cliente as c
 
@@ -17,14 +16,7 @@ class Janela:
         self.janela = tk.Tk()
         self.janela.title("Cliente-Servidor")
         self.janela.geometry("1480x700")
-        self.janela.configure(bg=bg_color)  # Adicione esta linha
-
-        # Configurando o tema do Ttk
-        #self.style = ttk.Style()
-        #self.style.theme_use('alt')  # Ou 'alt', 'default', 'classic'
-
-        # Barra de título da janela
-        #self.janela.tk_setPalette(background=bg_color)
+        self.janela.configure(bg=bg_color)
 
         # Seção do Servidor
         tk.Label(self.janela, text="Servidor", bg=bg_color).grid(row=0, column=1, pady=10)
@@ -73,11 +65,13 @@ class Janela:
         self.caixa_mensagem_enviada.grid(row=6, column=3, columnspan=2, padx=5, pady=5)
 
         # Entrada de mensagem e botão de envio
+        tk.Label(self.janela, text="Digite uma mensgem", bg=bg_color).grid(row=7, column=3, columnspan=2, pady=5, sticky=tk.W)
         self.entrada_mensagem = scrolledtext.ScrolledText(self.janela, width=80, height=5)
-        self.entrada_mensagem.grid(row=7, column=3, columnspan=2, padx=5, pady=5)
+        self.entrada_mensagem.grid(row=8, column=3, columnspan=2, padx=5, pady=5)
 
         # Label de resposta do servidor
-        self.retorno_servidor = tk.Label(self.janela, text="", bg=bg_color).grid(row=8, column=3, columnspan=2, pady=5, sticky=tk.W)
+        self.retorno_servidor = tk.Label(self.janela, text="", bg=bg_color)
+        self.retorno_servidor.grid(row=9, column=2, columnspan=2, pady=5, sticky=tk.W+tk.E)
 
         # Botão que executa a função em uma nova thread
         self.botao_enviar = tk.Button(
@@ -89,7 +83,7 @@ class Janela:
             bg="blue", 
             fg="white"
         )
-        self.botao_enviar.grid(row=8, column=4, pady=10, padx=20, sticky=tk.E)
+        self.botao_enviar.grid(row=9, column=4, pady=10, padx=20, sticky=tk.E)
 
     def enviar_mensagem(self):
         client_thread = threading.Thread(target=c.udp_client, args=(self.localIP, self.localPort, self.bufferSize, self.chavePublica, self))

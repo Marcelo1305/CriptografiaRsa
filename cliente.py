@@ -2,13 +2,12 @@ import socket
 import funcoes as f
 import tkinter as tk
 import ast
+from datetime import datetime
 
 def udp_client(localIP, localPort, bufferSize, chavePublica, form_janela):
     msgFromClient = form_janela.entrada_mensagem.get("1.0", tk.END).strip()
     if not msgFromClient:
         return
-
-    
 
     #Busca os parametros da janela
     localIP = form_janela.entrada_ip_cliente.get()
@@ -19,17 +18,20 @@ def udp_client(localIP, localPort, bufferSize, chavePublica, form_janela):
 
     msgCripto = f.criptografar(msgFromClient, chavePublica)
 
-    form_janela.entrada_mensagem.delete("1.0", tk.END)
-    # Configurar a tag para negrito
-    form_janela.caixa_mensagem_enviada.tag_config('bold', font=('Helvetica', 10, 'bold'))
+    # Limpar a caixa de texto
+    form_janela.entrada_mensagem.delete("1.0", tk.END)   
 
-    form_janela.caixa_mensagem_enviada.insert(tk.END, "Cliente Original: ", 'bold')
+    # Adicionar a mensagem enviada na caixa de texto                                           
+    form_janela.caixa_mensagem_enviada.tag_config('bold', font=('Helvetica', 10, 'bold'))      
+    form_janela.caixa_mensagem_enviada.insert(tk.END, "Cliente Original:".ljust(27, '_'), 'bold')
     form_janela.caixa_mensagem_enviada.insert(tk.END, f"{msgFromClient}\n")
-
-    form_janela.caixa_mensagem_enviada.insert(tk.END, "Mensagem criptografada: ", 'bold')
+    form_janela.caixa_mensagem_enviada.insert(tk.END, "Mensagem criptografada:".ljust(25, '_'), 'bold')
     form_janela.caixa_mensagem_enviada.insert(tk.END, f"{msgCripto}\n")
-
+    form_janela.caixa_mensagem_enviada.insert(tk.END, "IP:".ljust(26, '_'), 'bold')
+    form_janela.caixa_mensagem_enviada.insert(tk.END, f"{str(localIP)}\n")
     form_janela.caixa_mensagem_enviada.insert(tk.END, ("="*80) + '\n')
+    form_janela.caixa_mensagem_enviada.see(tk.END)                                                    
+
     print(msgFromClient)
     print("MENSAGEM CRIPTOGRAFADA:", msgCripto)
 
@@ -46,5 +48,7 @@ def udp_client(localIP, localPort, bufferSize, chavePublica, form_janela):
 
     msg = msgFromServer[0].decode('utf-8')
 
-    form_janela.retorno(msg)
+    # Obter a data atual
+    data_atual = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    form_janela.retorno(f"{msg} {data_atual}")
     print(msg)
